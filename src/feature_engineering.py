@@ -1,7 +1,7 @@
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler
 
 
 def load_processed_data(file_path):
@@ -10,22 +10,16 @@ def load_processed_data(file_path):
 
 
 def encode_categorical_columns(df):
-    """Encode categorical columns and store encoders."""
+    """Apply one-hot encoding to categorical columns."""
     df = df.copy()
 
-    categorical_columns = df.select_dtypes(include=["object"]).columns
-    label_encoders = {}
+    encoded_df = pd.get_dummies(df, drop_first=True)
 
-    for column in categorical_columns:
-        encoder = LabelEncoder()
-        df[column] = encoder.fit_transform(df[column])
-        label_encoders[column] = encoder
-
-    return df, label_encoders
+    return encoded_df
 
 
 def split_features_target(df, target_column="Churn"):
-    """Split dataframe into input features and target."""
+    """Split dataframe into features and target."""
     X = df.drop(target_column, axis=1)
     y = df[target_column]
 
@@ -60,11 +54,16 @@ if __name__ == "__main__":
     df = load_processed_data(processed_data_path)
 
     print("\nProcessed Dataset Loaded Successfully")
-    print("Shape:", df.shape)
+    print("Original Shape:", df.shape)
 
-    encoded_df, label_encoders = encode_categorical_columns(df)
+    encoded_df = encode_categorical_columns(df)
+
+    print("\nOne-Hot Encoding Completed")
+    print("Encoded Shape:", encoded_df.shape)
 
     X, y = split_features_target(encoded_df)
+
+    feature_names = X.columns.tolist()
 
     X_train, X_test, y_train, y_test = split_train_test(X, y)
 
@@ -75,6 +74,7 @@ if __name__ == "__main__":
     print("Testing Features Shape:", X_test_scaled.shape)
     print("Training Target Shape:", y_train.shape)
     print("Testing Target Shape:", y_test.shape)
+    print("Total Features:", len(feature_names))
 
     print("\nClass Distribution in Full Dataset:")
     print(y.value_counts(normalize=True))
