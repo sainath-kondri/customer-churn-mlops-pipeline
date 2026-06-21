@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 
 def load_data(file_path):
@@ -11,17 +12,13 @@ def clean_data(df):
 
     df = df.copy()
 
-    # Convert TotalCharges from object/string to numeric
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
 
-    # Fill missing TotalCharges with median value
     df["TotalCharges"] = df["TotalCharges"].fillna(df["TotalCharges"].median())
 
-    # Remove customerID because it is only an identifier
     if "customerID" in df.columns:
         df = df.drop("customerID", axis=1)
 
-    # Standardize target column
     df["Churn"] = df["Churn"].map({"Yes": 1, "No": 0})
 
     return df
@@ -29,6 +26,7 @@ def clean_data(df):
 
 def save_processed_data(df, output_path):
     """Save cleaned dataset."""
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
 
 
