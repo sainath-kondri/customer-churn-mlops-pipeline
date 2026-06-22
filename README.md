@@ -86,3 +86,4 @@ https://customer-churn-api-7kb5.onrender.com
 ## Author
 
 Sainath Kondri
+CI/CD workflow configured using GitHub Actions.
