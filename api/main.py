@@ -3,6 +3,7 @@ import pandas as pd
 
 from fastapi import FastAPI
 from api.schema import CustomerData
+from monitoring.logger import log_prediction
 
 
 app = FastAPI(
@@ -33,6 +34,14 @@ def home():
     }
 
 
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "model": model_name
+    }
+
+
 @app.post("/predict")
 def predict_churn(customer: CustomerData):
 
@@ -51,9 +60,17 @@ def predict_churn(customer: CustomerData):
     probability = model.predict_proba(input_scaled)[0][1]
 
     result = "Churn" if prediction == 1 else "No Churn"
+    churn_probability = round(float(probability), 4)
+
+    log_prediction(
+        input_data=customer.model_dump(),
+        prediction=result,
+        probability=churn_probability,
+        model_name=model_name
+    )
 
     return {
         "prediction": result,
-        "churn_probability": round(float(probability), 4),
+        "churn_probability": churn_probability,
         "model_used": model_name
     }
