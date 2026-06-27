@@ -47,7 +47,7 @@ def predict_churn(customer: CustomerData):
 
     input_data = pd.DataFrame([customer.model_dump()])
 
-    input_encoded = pd.get_dummies(input_data, drop_first=True)
+    input_encoded = pd.get_dummies(input_data)
 
     input_encoded = input_encoded.reindex(
         columns=feature_names,
