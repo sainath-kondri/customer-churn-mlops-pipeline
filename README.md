@@ -272,3 +272,58 @@ Machine Learning Engineer
 
 ```
 ```
+## 📸 Project Demo
+
+### 1. FastAPI Swagger UI
+
+Interactive API documentation for testing prediction requests.
+
+![Swagger UI](screenshots/swagger-ui.png)
+
+---
+
+### 2. Prediction Request
+
+Customer information submitted through the FastAPI Swagger interface.
+
+![Prediction Request](screenshots/prediction-request.png)
+
+---
+
+### 3. Prediction Response
+
+Prediction returned by the trained machine learning model.
+
+![Prediction Response](screenshots/prediction-response.png)
+
+---
+
+### 4. GitHub Actions CI
+
+Continuous Integration workflow validating every push.
+
+![GitHub Actions](screenshots/github-actions-ci.png)
+
+---
+
+### 5. Render Deployment
+
+Production deployment of the FastAPI application on Render.
+
+![Render Deployment](screenshots/render-deployment.png)
+
+---
+
+### 6. Monitoring Dashboard Summary
+
+Real-time dashboard displaying prediction statistics.
+
+![Monitoring Dashboard Summary](screenshots/monitoring-dashboard-summary.png)
+
+---
+
+### 7. Monitoring Dashboard Logs
+
+Recent prediction logs captured by the monitoring dashboard.
+
+![Monitoring Dashboard Logs](screenshots/monitoring-dashboard-logs.png)
